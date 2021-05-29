@@ -15,15 +15,15 @@
             _y = y;
         }
 
-        public Ball MutateX(int x)
+        public Ball MutateX(int stepX)
         {
-            _x += x;
+            _x += stepX;
             return this;
         }
         
-        public Ball MutateY(int y)
+        public Ball MutateY(int stepY)
         {
-            _y += y;
+            _y += stepY;
             return this;
         }
 

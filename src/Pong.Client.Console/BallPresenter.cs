@@ -1,4 +1,5 @@
 ﻿using Pong.Engine;
+using static Pong.Client.Console.ConsoleUtils;
 
 namespace Pong.Client.Console
 {
@@ -23,7 +24,7 @@ namespace Pong.Client.Console
             if (HasPositionChanged(x, y))
             {
                 SetCursorAt(_ballX, _ballY);
-                ClearChar();
+                ClearCharAtCurrentCursorPosition();
 
                 _ballX = x;
                 _ballY = y;
@@ -39,9 +40,5 @@ namespace Pong.Client.Console
             SetCursorAt(x, y);
             System.Console.Write("\u25A1");
         }
-
-        private static void SetCursorAt(int x, int y) => System.Console.SetCursorPosition(x, y);
-
-        private static void ClearChar() => System.Console.Write("\b");
     }
 }
