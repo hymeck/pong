@@ -20,21 +20,31 @@ namespace Pong.Client.Console
             // presenter.Print();
             // Thread.Sleep(1000);
 
+            // boardPresenter.Print();
+            // Thread.Sleep(1000);
+            // board.MutateY(1); // down by 1
+            //
+            // boardPresenter.Print();
+            // Thread.Sleep(1000);
+            // board.MutateY(1); // down by 1
+            //
+            // boardPresenter.Print();
+            // Thread.Sleep(1000);
+            // board.MutateY(1); // down by 1
+            // boardPresenter.Print();
+            
             var board = new Board(0, 3);
             var boardPresenter = new BoardPresenter(board);
+            boardPresenter.Print();
             
-            boardPresenter.Print();
-            Thread.Sleep(1000);
-            board.MutateY(1); // down by 1
-            
-            boardPresenter.Print();
-            Thread.Sleep(1000);
-            board.MutateY(1); // down by 1
-            
-            boardPresenter.Print();
-            Thread.Sleep(1000);
-            board.MutateY(1); // down by 1
-            boardPresenter.Print();
+            var boardMover = new BoardMover(board); // it moves board
+            var keyHandler = new KeyHandler(boardMover); // it handles key pressings and fires boardMover
+            boardMover.BoardMoved += boardPresenter.OnBoardMoved; // subscribe to refresh board state
+            while (true)
+            {
+                // ctrl + c to exit
+                keyHandler.Handle();
+            }
         }
     }
 }

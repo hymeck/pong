@@ -54,5 +54,10 @@ namespace Pong.Client.Console
         }
 
         private bool HasPositionChanged(int y) => _boardY != y;
+
+        public void OnBoardMoved(object sender, BoardMovedEventArgs e)
+        {
+            Print();
+        }
     }
 }
