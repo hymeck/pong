@@ -4,6 +4,15 @@ namespace Pong.Engine
 {
     public class PhysicsChecker
     {
+        public static bool CanBoardMove(Board board, Map map, int step)
+        {
+            var topY = FindTopY(board);
+            var bottomY = FindBottomY(board);
+            var absStep = Math.Abs(step);
+            return step < 0 
+                ? topY - absStep > 0 
+                : bottomY + absStep < map.Height + 1;
+        } 
         public static bool CanBoardReflect(Board board, Ball ball)
         {
             var topY = FindTopY(board);
@@ -12,10 +21,19 @@ namespace Pong.Engine
 
         private static int FindTopY(Board board)
         {
-            var y = board.Y;
-            var half = board.SizeY >> 1;
-            var topY = y - half;
-            return topY;
+            // var y = board.Y;
+            // var half = board.SizeY >> 1;
+            // var topY = y - half;
+            // return topY;
+            return board.Y - (board.SizeY >> 1);
+        } 
+        private static int FindBottomY(Board board)
+        {
+            // var y = board.Y;
+            // var half = board.SizeY >> 1;
+            // var topY = y - half;
+            // return topY;
+            return board.Y + (board.SizeY >> 1);
         }
 
         private static int AbsDiffX(Board board, Ball ball) => Math.Abs(board.X - ball.X);

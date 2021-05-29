@@ -1,4 +1,6 @@
-﻿using System.Diagnostics;
+﻿using System;
+using System.Collections.Generic;
+using System.Diagnostics;
 using System.Threading;
 using Pong.Engine;
 
@@ -73,7 +75,7 @@ namespace Pong.Client.Console
             // Debug.WriteLine(PhysicsChecker.CanBoardReflect(board, ball)); // true
             
             
-            // -- map --
+            // -- map, control map bounds --
             var map = new Map(10, 7);
             var mapPresenter = new MapPresenter(map);
             mapPresenter.Print();
@@ -82,8 +84,14 @@ namespace Pong.Client.Console
             var boardPresenter = new BoardPresenter(board);
             boardPresenter.Print();
             
-            var boardMover = new BoardMover(board); // it moves board
-            var keyHandler = new KeyHandler(boardMover); // it handles key pressings and fires boardMover
+            var boardMover = new BoardMover(board, map); // it moves board
+            var keyMapper = new KeyMapper(new Dictionary<ConsoleKey, Action>(2)
+            {
+                {ConsoleKey.W, boardMover.Up},
+                {ConsoleKey.S, boardMover.Down}
+            });
+            
+            var keyHandler = new KeyHandler(keyMapper); // it handles key pressings and fires board moving
             boardMover.BoardMoved += boardPresenter.OnBoardMoved; // subscribe to refresh board state
             while (true)
             {

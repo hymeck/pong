@@ -1,34 +1,31 @@
 ﻿using System;
 using Pong.Engine;
+using static Pong.Engine.PhysicsChecker;
 
 namespace Pong.Client.Console
 {
     public class KeyHandler
     {
-        private readonly BoardMover _boardMover;
-        private char _up;
-        private char _down;
+        private readonly KeyMapper _keyMapper;
 
-        public KeyHandler(BoardMover boardMover, char up = 'w', char down = 's')
+        public KeyHandler(KeyMapper keyMapper)
         {
-            _boardMover = boardMover;
-            _up = up;
-            _down = down;
+            _keyMapper = keyMapper;
         }
 
         public void Handle()
         {
-            var key = System.Console.ReadKey(true);
-            HandleKey(key);
+            var keyInfo = System.Console.ReadKey(true);
+            HandleKey(keyInfo);
         }
 
         private void HandleKey(ConsoleKeyInfo keyInfo)
         {
-            var keyChar = keyInfo.KeyChar;
-            if (keyChar == _up)
-                _boardMover.Up();
-            else if (keyChar == _down)
-                _boardMover.Down();
+            var consoleKey = keyInfo.Key;
+            if (!_keyMapper.HasKey(consoleKey))
+                return;
+            
+            _keyMapper[consoleKey].Invoke();
         }
     }
 }
