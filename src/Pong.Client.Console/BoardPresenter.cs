@@ -49,7 +49,9 @@ namespace Pong.Client.Console
             for (var i = 0; i < _sizeY; i++)
             {
                 SetCursorAt(_boardX, topY++);
-                System.Console.Write('#');
+                // System.Console.Write('#');
+                // System.Console.Write("\u25AE");
+                System.Console.Write("\u258C");
             }
         }
 
