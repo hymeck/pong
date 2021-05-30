@@ -41,5 +41,10 @@ namespace Pong.Client.Console
             // System.Console.Write("\u25ef");
             System.Console.Write("\u25cb");
         }
+
+        public void OnBallMoved(object sender, BallMovedEventArgs e)
+        {
+            Print();
+        }
     }
 }

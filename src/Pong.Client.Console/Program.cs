@@ -104,23 +104,20 @@ namespace Pong.Client.Console
             var ball = new Ball(4, 4);
             var ballPresenter = new BallPresenter(ball);
             var ballMover = new BallMover(ball);
+            ballMover.BallMoved += ballPresenter.OnBallMoved;
             ballPresenter.Print();
 
+            Thread.Sleep(1000);
             ballMover.MoveUpRight();
+
             Thread.Sleep(1000);
-            ballPresenter.Print();
-            
             ballMover.MoveDownRight();
+
             Thread.Sleep(1000);
-            ballPresenter.Print();
-            
             ballMover.MoveDownLeft();
+
             Thread.Sleep(1000);
-            ballPresenter.Print();
-            
             ballMover.MoveUpLeft();
-            Thread.Sleep(1000);
-            ballPresenter.Print();
         }
     }
 }
