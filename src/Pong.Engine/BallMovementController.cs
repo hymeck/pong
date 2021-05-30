@@ -22,6 +22,14 @@ namespace Pong.Engine
             var nextX = currentX + currentMovement.Dx;
             var nextY = currentY + currentMovement.Dy;
 
+            if (CanBoardReflect(_map.LeftBoard, nextX, nextY))
+            {
+                _ballMover.
+                    ReflectBall(Axis.X)
+                    .Move();
+                return;
+            }
+
             if (IsBallOnMap(_map, nextX, nextY))
             {
                 _ballMover.Move();

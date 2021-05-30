@@ -12,7 +12,7 @@ namespace Pong.Client.Console
         {
             System.Console.OutputEncoding = System.Text.Encoding.UTF8;
             System.Console.Clear();
-            // System.Console.CursorVisible = false;
+            System.Console.CursorVisible = false;
             
             // -- ball rendering --
             // var ball = new Ball();
@@ -121,20 +121,58 @@ namespace Pong.Client.Console
             
             
             // -- ball moving --
-            var map = new Map(21, 7);
+            // var map = new Map(21, 7);
+            // var mapPresenter = new MapPresenter(map);
+            // mapPresenter.Print();
+            //
+            // var ball = new Ball(3, 3);
+            // var ballPresenter = new BallPresenter(ball);
+            // var ballMover = new BallMover(ball, MovementDirection.UpRight);
+            // ballMover.BallMoved += ballPresenter.OnBallMoved;
+            // ballPresenter.Print();
+            //
+            // var ballMovementController = new BallMovementController(ballMover, map);
+            // var ballMovementTrigger = new BallMovementTrigger(10, ballMovementController.OnMoveOccured);
+            // Thread.Sleep(100_000);
+            // ballMovementTrigger.Dispose();
+            
+            
+            // -- ball moving with board --
+            var map = new Map(21, 10);
             var mapPresenter = new MapPresenter(map);
             mapPresenter.Print();
-            
-            var ball = new Ball(3, 3);
+
+            var board = new Board(1, 6);
+            map.LeftBoard = board;
+            var boardPresenter = new BoardPresenter(board);
+            boardPresenter.Print();
+            var boardMover = new BoardMover(board, map);
+            boardMover.BoardMoved += boardPresenter.OnBoardMoved;
+            var keyMapper = new KeyMapper(new Dictionary<ConsoleKey, Action>(2)
+            {
+                {ConsoleKey.W, boardMover.Up},
+                {ConsoleKey.S, boardMover.Down}
+            });
+            var keyHandler = new KeyHandler(keyMapper);
+
+            var ball = new Ball(5, 5);
             var ballPresenter = new BallPresenter(ball);
-            var ballMover = new BallMover(ball, MovementDirection.UpRight);
-            ballMover.BallMoved += ballPresenter.OnBallMoved;
             ballPresenter.Print();
             
+            var ballMover = new BallMover(ball, MovementDirection.UpRight);
+            ballMover.BallMoved += ballPresenter.OnBallMoved;
+
             var ballMovementController = new BallMovementController(ballMover, map);
+            // ballMovementController.OnMoveOccured();
+            // ballMovementController.OnMoveOccured();
             var ballMovementTrigger = new BallMovementTrigger(10, ballMovementController.OnMoveOccured);
-            Thread.Sleep(100_000);
-            ballMovementTrigger.Dispose();
+            // Thread.Sleep(100_000);
+            // ballMovementTrigger.Dispose();
+
+            while (true)
+            {
+                keyHandler.Handle();
+            }
         }
     }
 }

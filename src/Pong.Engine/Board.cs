@@ -29,6 +29,14 @@ namespace Pong.Engine
             _y += stepY;
             return this;
         }
+
+        public bool HasTakenPlace(int x, int y)
+        {
+            var half = _sizeY << 1;
+            var topY = _y - half;
+            var bottomY = _y + half;
+            return x == _x && y >= topY && y <= bottomY;
+        }
         
         public (int x, int y) CurrentPosition => (_x, _y);
         
