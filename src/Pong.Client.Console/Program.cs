@@ -101,23 +101,40 @@ namespace Pong.Client.Console
             
             
             // -- ball rendering --
-            var ball = new Ball(4, 4);
+            // var ball = new Ball(4, 4);
+            // var ballPresenter = new BallPresenter(ball);
+            // var ballMover = new BallMover(ball);
+            // ballMover.BallMoved += ballPresenter.OnBallMoved;
+            // ballPresenter.Print();
+            //
+            // Thread.Sleep(1000);
+            // ballMover.MoveUpRight();
+            //
+            // Thread.Sleep(1000);
+            // ballMover.MoveDownRight();
+            //
+            // Thread.Sleep(1000);
+            // ballMover.MoveDownLeft();
+            //
+            // Thread.Sleep(1000);
+            // ballMover.MoveUpLeft();
+            
+            
+            // -- ball moving --
+            var map = new Map(21, 7);
+            var mapPresenter = new MapPresenter(map);
+            mapPresenter.Print();
+            
+            var ball = new Ball(3, 3);
             var ballPresenter = new BallPresenter(ball);
-            var ballMover = new BallMover(ball);
+            var ballMover = new BallMover(ball, MovementDirection.UpRight);
             ballMover.BallMoved += ballPresenter.OnBallMoved;
             ballPresenter.Print();
-
-            Thread.Sleep(1000);
-            ballMover.MoveUpRight();
-
-            Thread.Sleep(1000);
-            ballMover.MoveDownRight();
-
-            Thread.Sleep(1000);
-            ballMover.MoveDownLeft();
-
-            Thread.Sleep(1000);
-            ballMover.MoveUpLeft();
+            
+            var ballMovementController = new BallMovementController(ballMover, map);
+            var ballMovementTrigger = new BallMovementTrigger(10, ballMovementController.OnMoveOccured);
+            Thread.Sleep(100_000);
+            ballMovementTrigger.Dispose();
         }
     }
 }

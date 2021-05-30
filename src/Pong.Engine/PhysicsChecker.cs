@@ -19,6 +19,10 @@ namespace Pong.Engine
             return CheckReflection(topY, board, ball);
         }
 
+        public static bool IsBallOnMap(Map map, int ballX, int ballY) =>
+            ballX > 0 && ballX < map.Width + 1 &&
+            ballY > 0 && ballY < map.Height + 1;
+
         private static int FindTopY(Board board) => board.Y - (board.SizeY >> 1);
         private static int FindBottomY(Board board) => board.Y + (board.SizeY >> 1);
 
