@@ -19,22 +19,8 @@ namespace Pong.Engine
             return CheckReflection(topY, board, ball);
         }
 
-        private static int FindTopY(Board board)
-        {
-            // var y = board.Y;
-            // var half = board.SizeY >> 1;
-            // var topY = y - half;
-            // return topY;
-            return board.Y - (board.SizeY >> 1);
-        } 
-        private static int FindBottomY(Board board)
-        {
-            // var y = board.Y;
-            // var half = board.SizeY >> 1;
-            // var topY = y - half;
-            // return topY;
-            return board.Y + (board.SizeY >> 1);
-        }
+        private static int FindTopY(Board board) => board.Y - (board.SizeY >> 1);
+        private static int FindBottomY(Board board) => board.Y + (board.SizeY >> 1);
 
         private static int AbsDiffX(Board board, Ball ball) => Math.Abs(board.X - ball.X);
 

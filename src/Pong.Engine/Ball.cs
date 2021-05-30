@@ -27,6 +27,13 @@
             return this;
         }
 
+        public Ball MutateXAndY(int stepX, int stepY)
+        {
+            _x += stepX;
+            _y += stepY;
+            return this;
+        }
+
         public (int x, int y) CurrentPosition => (_x, _y);
 
         public int X => _x;

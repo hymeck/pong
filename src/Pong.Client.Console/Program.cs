@@ -76,28 +76,51 @@ namespace Pong.Client.Console
             
             
             // -- map, control map bounds --
-            var map = new Map(10, 7);
-            var mapPresenter = new MapPresenter(map);
-            mapPresenter.Print();
+            // var map = new Map(21, 7);
+            // var mapPresenter = new MapPresenter(map);
+            // mapPresenter.Print();
+            //
+            // var board = new Board(1, 3);
+            // var boardPresenter = new BoardPresenter(board);
+            // boardPresenter.Print();
+            //
+            // var boardMover = new BoardMover(board, map); // it moves board
+            // var keyMapper = new KeyMapper(new Dictionary<ConsoleKey, Action>(2)
+            // {
+            //     {ConsoleKey.W, boardMover.Up},
+            //     {ConsoleKey.S, boardMover.Down}
+            // });
+            //
+            // var keyHandler = new KeyHandler(keyMapper); // it handles key pressings and fires board moving
+            // boardMover.BoardMoved += boardPresenter.OnBoardMoved; // subscribe to refresh board state
+            // while (true)
+            // {
+            //     // ctrl + c to exit
+            //     keyHandler.Handle();
+            // }
             
-            var board = new Board(1, 3);
-            var boardPresenter = new BoardPresenter(board);
-            boardPresenter.Print();
             
-            var boardMover = new BoardMover(board, map); // it moves board
-            var keyMapper = new KeyMapper(new Dictionary<ConsoleKey, Action>(2)
-            {
-                {ConsoleKey.W, boardMover.Up},
-                {ConsoleKey.S, boardMover.Down}
-            });
+            // -- ball rendering --
+            var ball = new Ball(4, 4);
+            var ballPresenter = new BallPresenter(ball);
+            var ballMover = new BallMover(ball);
+            ballPresenter.Print();
+
+            ballMover.MoveUpRight();
+            Thread.Sleep(1000);
+            ballPresenter.Print();
             
-            var keyHandler = new KeyHandler(keyMapper); // it handles key pressings and fires board moving
-            boardMover.BoardMoved += boardPresenter.OnBoardMoved; // subscribe to refresh board state
-            while (true)
-            {
-                // ctrl + c to exit
-                keyHandler.Handle();
-            }
+            ballMover.MoveDownRight();
+            Thread.Sleep(1000);
+            ballPresenter.Print();
+            
+            ballMover.MoveDownLeft();
+            Thread.Sleep(1000);
+            ballPresenter.Print();
+            
+            ballMover.MoveUpLeft();
+            Thread.Sleep(1000);
+            ballPresenter.Print();
         }
     }
 }

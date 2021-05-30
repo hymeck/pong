@@ -38,7 +38,8 @@ namespace Pong.Client.Console
         private void PrintBallAt(int x, int y)
         {
             SetCursorAt(x, y);
-            System.Console.Write("\u25A1");
+            // System.Console.Write("\u25ef");
+            System.Console.Write("\u25cb");
         }
     }
 }
