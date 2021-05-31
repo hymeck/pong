@@ -13,67 +13,40 @@ namespace Pong.Engine
             _currentMovementDirection = currentMovementDirection;
         }
 
-        private void ChangeBallPositionAndRaiseEvent(MovementDirection movementDirection)
+        private void MutateBallPositionAndRaiseEvent()
         {
-            var (dx, dy) = movementDirection;
+            var (dx, dy) = _currentMovementDirection;
             _ball.MutateXAndY(dx, dy);
-            
-            _currentMovementDirection = movementDirection;
-            
             BallMoved?.Invoke(this, new BallMovedEventArgs(_ball.CurrentPosition, _currentMovementDirection));
         }
         
-        // public void MoveUpRight()
-        // {
-        //     ChangeBallPositionAndRaiseEvent(MovementDirection.UpRight);
-        // }
-        //
-        // public void MoveDownRight()
-        // {
-        //     ChangeBallPositionAndRaiseEvent(MovementDirection.DownRight);
-        // }
-        //
-        // public void MoveDownLeft()
-        // {
-        //     ChangeBallPositionAndRaiseEvent(MovementDirection.DownLeft);
-        // }
-        //
-        // public void MoveUpLeft()
-        // {
-        //     ChangeBallPositionAndRaiseEvent(MovementDirection.UpLeft);
-        // }
-
-        public void Move(MovementDirection movementDirection)
+        private void ChangeBallPositionAndRaiseEvent(MovementDirection movementDirection)
         {
-            ChangeBallPositionAndRaiseEvent(movementDirection);
+            _currentMovementDirection = movementDirection;
+            MutateBallPositionAndRaiseEvent();
         }
         
-        public void Move()
-        {
-            Move(_currentMovementDirection);
-        }
-        
-        public (int x, int y) CurrentPosition => _ball.CurrentPosition;
-        public MovementDirection CurrentMovementDirection => _currentMovementDirection;
-
         public BallMover ChangeDirection(MovementDirection movementDirection)
         {
             _currentMovementDirection = movementDirection;
             return this;
         }
 
-        public BallMover ReflectBall(Axis mapAxis)
+        public BallMover ReflectBall(Axis reverseAxis)
         {
-            if (mapAxis == Axis.Y)
-                _currentMovementDirection = _currentMovementDirection.ReverseY();
-            else if (mapAxis == Axis.X)
-                _currentMovementDirection = _currentMovementDirection.ReverseX();
-            else if (mapAxis == Axis.XY)
-                _currentMovementDirection = _currentMovementDirection.ReverseXY();
-
-            return this;
+            var newDirection = _currentMovementDirection.GetReversedDirection(reverseAxis);
+            return ChangeDirection(newDirection);
         }
         
+        public void MoveUpRight() => ChangeBallPositionAndRaiseEvent(MovementDirection.UpRight);
+        public void MoveDownRight() => ChangeBallPositionAndRaiseEvent(MovementDirection.DownRight);
+        public void MoveDownLeft() => ChangeBallPositionAndRaiseEvent(MovementDirection.DownLeft);
+        public void MoveUpLeft() => ChangeBallPositionAndRaiseEvent(MovementDirection.UpLeft);
+        public void Move() => MutateBallPositionAndRaiseEvent();
+
+        public (int x, int y) CurrentPosition => _ball.CurrentPosition;
+        public MovementDirection CurrentMovementDirection => _currentMovementDirection;
+
         public event EventHandler<BallMovedEventArgs> BallMoved;
     }
 }

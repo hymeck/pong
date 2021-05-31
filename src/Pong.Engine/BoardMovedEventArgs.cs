@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 
 namespace Pong.Engine
 {
@@ -8,7 +7,6 @@ namespace Pong.Engine
         public (int x, int y) CurrentPosition { get; }
         public int SizeY { get; }
         
-
         public BoardMovedEventArgs((int x, int y) currentPosition, int sizeY)
         {
             CurrentPosition = currentPosition;

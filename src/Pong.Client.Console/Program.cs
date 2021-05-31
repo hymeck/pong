@@ -142,7 +142,7 @@ namespace Pong.Client.Console
             var mapPresenter = new MapPresenter(map);
             mapPresenter.Print();
 
-            var board = new Board(1, 6);
+            var board = new Board(5, 1, 6);
             map.LeftBoard = board;
             var boardPresenter = new BoardPresenter(board);
             boardPresenter.Print();

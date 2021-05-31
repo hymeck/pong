@@ -24,8 +24,8 @@ namespace Pong.Engine
 
             if (CanBoardReflect(_map.LeftBoard, nextX, nextY))
             {
-                _ballMover.
-                    ReflectBall(Axis.X)
+                _ballMover
+                    .ReflectBall(Axis.X)
                     .Move();
                 return;
             }

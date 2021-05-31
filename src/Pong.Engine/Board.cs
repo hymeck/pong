@@ -1,6 +1,4 @@
-﻿using Pong.Engine.Exceptions;
-
-namespace Pong.Engine
+﻿namespace Pong.Engine
 {
     public class Board
     {
@@ -10,19 +8,10 @@ namespace Pong.Engine
 
         public Board(int sizeY, int x, int y)
         {
-            // if (sizeY <= 0 || sizeY % 2 != 0) // less than zero or even
-            //     throw new BoardSizeException(sizeY);
-            
             _sizeY = sizeY;
             _x = x;
             _y = y;
         }
-        
-        #if DEBUG
-        public Board(int x, int y) : this(5, x, y)
-        {
-        }
-        #endif
 
         public Board MutateY(int stepY)
         {
@@ -30,19 +19,13 @@ namespace Pong.Engine
             return this;
         }
 
-        public bool HasTakenPlace(int x, int y)
-        {
-            var half = _sizeY << 1;
-            var topY = _y - half;
-            var bottomY = _y + half;
-            return x == _x && y >= topY && y <= bottomY;
-        }
-        
+        public bool HasTakenPlace(int x, int y) => x == _x && y >= TopY && y <= BottomY;
         public (int x, int y) CurrentPosition => (_x, _y);
-        
         public int X => _x;
         public int Y => _y;
-
         public int SizeY => _sizeY;
+        public int HalfSize => _sizeY >> 1;
+        public int TopY => _y - HalfSize;
+        public int BottomY => _y + HalfSize;
     }
 }
