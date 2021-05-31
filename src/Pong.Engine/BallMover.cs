@@ -43,8 +43,9 @@ namespace Pong.Engine
         public void MoveDownLeft() => ChangeBallPositionAndRaiseEvent(MovementDirection.DownLeft);
         public void MoveUpLeft() => ChangeBallPositionAndRaiseEvent(MovementDirection.UpLeft);
         public void Move() => MutateBallPositionAndRaiseEvent();
-
         public (int x, int y) CurrentPosition => _ball.CurrentPosition;
+        public int CurrentX => _ball.X;
+        public int CurrentY => _ball.Y;
         public MovementDirection CurrentMovementDirection => _currentMovementDirection;
 
         public event EventHandler<BallMovedEventArgs> BallMoved;

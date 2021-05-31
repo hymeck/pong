@@ -12,48 +12,41 @@ namespace Pong.Engine
             _ballMover = ballMover;
             _map = map;
         }
-        
-        // this signature is required for System.Threading.Timer
-        public void OnMoveOccured(object state = null)
+        private void ReflectByMapIfPossible(int x, int y)
         {
-            var (currentX, currentY) = _ballMover.CurrentPosition;
-            var currentMovement = _ballMover.CurrentMovementDirection;
-
-            var nextX = currentX + currentMovement.Dx;
-            var nextY = currentY + currentMovement.Dy;
-
-            if (CanBoardReflect(_map.LeftBoard, nextX, nextY))
-            {
-                _ballMover
-                    .ReflectBall(Axis.X)
-                    .Move();
-                return;
-            }
-
-            if (IsBallOnMap(_map, nextX, nextY))
-            {
-                _ballMover.Move();
-                return;
-            }
-
-            var mapAxis = GetAxis(nextX, nextY);
-            _ballMover
-                .ReflectBall(mapAxis)
-                .Move();
+            if (CanMapReflect(_map, x, y)) 
+                _ballMover.ReflectBall(GetReflectionAxis(x, y));
         }
 
-        private Axis GetAxis(int ballX, int ballY)
+        private void ReflectByBoardIfPossible(int x, int y)
+        {
+            if (CanBoardReflect(_map.LeftBoard, x, y)) 
+                _ballMover.ReflectBall(Axis.X);
+        }
+
+        private Axis GetReflectionAxis(int ballX, int ballY)
         {
             // angles
             if ((ballX == _map.Width + 1 || ballX == 0) && (ballY == _map.Height + 1 || ballY == 0))
                 return Axis.XY;
             
             // vertical
-            if (ballY <= 0 || ballY >= _map.Height + 1)
+            if (ballY <= 1 || ballY >= _map.Height)
                 return Axis.Y;
 
             // horizontal
             return Axis.X;
+        }
+        
+        // this signature is required for System.Threading.Timer
+        public void OnMoveOccured(object state = null)
+        {
+            var (x, y) = _ballMover.CurrentPosition;
+            System.Diagnostics.Debug.WriteLine($"({x.ToString()}, {y.ToString()})");
+            ReflectByBoardIfPossible(x, y);
+            ReflectByMapIfPossible(x, y);
+            
+            _ballMover.Move();
         }
     }
 }

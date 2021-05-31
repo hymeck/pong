@@ -159,13 +159,15 @@ namespace Pong.Client.Console
             var ballPresenter = new BallPresenter(ball);
             ballPresenter.Print();
             
-            var ballMover = new BallMover(ball, MovementDirection.UpRight);
+            var ballMover = new BallMover(ball, MovementDirection.DownLeft);
             ballMover.BallMoved += ballPresenter.OnBallMoved;
 
             var ballMovementController = new BallMovementController(ballMover, map);
             // ballMovementController.OnMoveOccured();
             // ballMovementController.OnMoveOccured();
-            var ballMovementTrigger = new BallMovementTrigger(10, ballMovementController.OnMoveOccured);
+            // ballMovementController.OnMoveOccured();
+            // ballMovementController.OnMoveOccured();
+            var ballMovementTrigger = new BallMovementTrigger(5, ballMovementController.OnMoveOccured);
             // Thread.Sleep(100_000);
             // ballMovementTrigger.Dispose();
 
