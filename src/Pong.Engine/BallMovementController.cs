@@ -20,14 +20,15 @@ namespace Pong.Engine
 
         private void ReflectByBoardIfPossible(int x, int y)
         {
-            if (CanBoardReflect(_map.LeftBoard, x, y)) 
+            var currentDirection = _ballMover.CurrentMovementDirection;
+            if (CanBoardReflect(_map.LeftBoard, x, y) && !currentDirection.IsRight) 
                 _ballMover.ReflectBall(Axis.X);
         }
 
         private Axis GetReflectionAxis(int ballX, int ballY)
         {
             // angles
-            if ((ballX == _map.Width + 1 || ballX == 0) && (ballY == _map.Height + 1 || ballY == 0))
+            if ((ballX == _map.Width || ballX == 1) && (ballY == _map.Height || ballY == 1))
                 return Axis.XY;
             
             // vertical

@@ -24,5 +24,7 @@
                 Axis.XY => ReverseXY(),
                 _ => this
             };
+
+        public bool IsRight => Dx > 0;
     }
 }
