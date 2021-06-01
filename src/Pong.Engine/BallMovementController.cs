@@ -23,6 +23,8 @@ namespace Pong.Engine
             var currentDirection = _ballMover.CurrentMovementDirection;
             if (CanBoardReflect(_map.LeftBoard, x, y) && !currentDirection.IsRight) 
                 _ballMover.ReflectBall(Axis.X);
+            if (CanBoardReflect(_map.RightBoard, x, y) && !currentDirection.IsLeft) 
+                _ballMover.ReflectBall(Axis.X);
         }
 
         private Axis GetReflectionAxis(int ballX, int ballY)

@@ -26,5 +26,6 @@
             };
 
         public bool IsRight => Dx > 0;
+        public bool IsLeft => Dx < 0;
     }
 }

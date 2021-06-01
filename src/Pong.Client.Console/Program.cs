@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Threading;
+using System.Threading.Tasks;
 using Pong.Engine;
 
 namespace Pong.Client.Console
@@ -154,6 +155,19 @@ namespace Pong.Client.Console
                 {ConsoleKey.S, boardMover.Down}
             });
             var keyHandler = new KeyHandler(keyMapper);
+            
+            var board2 = new Board(5, 21, 6);
+            map.RightBoard = board2;
+            var board2Presenter = new BoardPresenter(board2);
+            board2Presenter.Print();
+            var boardMover2 = new BoardMover(board2, map);
+            boardMover2.BoardMoved += board2Presenter.OnBoardMoved;
+            var keyMapper2 = new KeyMapper(new Dictionary<ConsoleKey, Action>(2)
+            {
+                {ConsoleKey.UpArrow, boardMover2.Up},
+                {ConsoleKey.DownArrow, boardMover2.Down}
+            });
+            var keyHandler2 = new KeyHandler(keyMapper2);
 
             var ball = new Ball(5, 5);
             var ballPresenter = new BallPresenter(ball);
@@ -163,17 +177,12 @@ namespace Pong.Client.Console
             ballMover.BallMoved += ballPresenter.OnBallMoved;
 
             var ballMovementController = new BallMovementController(ballMover, map);
-            // ballMovementController.OnMoveOccured();
-            // ballMovementController.OnMoveOccured();
-            // ballMovementController.OnMoveOccured();
-            // ballMovementController.OnMoveOccured();
             var ballMovementTrigger = new BallMovementTrigger(5, ballMovementController.OnMoveOccured);
-            // Thread.Sleep(100_000);
-            // ballMovementTrigger.Dispose();
 
             while (true)
             {
-                keyHandler.Handle();
+                Parallel.Invoke(keyHandler.Handle);
+                Parallel.Invoke(keyHandler2.Handle);
             }
         }
     }

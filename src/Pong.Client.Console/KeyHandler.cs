@@ -1,6 +1,4 @@
 ﻿using System;
-using Pong.Engine;
-using static Pong.Engine.PhysicsChecker;
 
 namespace Pong.Client.Console
 {
